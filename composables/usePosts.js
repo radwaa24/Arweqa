@@ -1,11 +1,12 @@
+import { useToast } from "vue-toastification";
+
 export default function useInfinitePosts() {
+  const toast = useToast();
   const posts = ref([]);
   const loading = ref(true);
   const currentPage = ref(1);
   const lastPage = ref(null);
   const reachedTheEnd = ref(false);
-  const { $toast } = useNuxtApp();
-
   async function getPosts() {
     loading.value = true;
 
@@ -19,7 +20,7 @@ export default function useInfinitePosts() {
       })
       .catch((err) => {
         loading.value = false;
-        $toast.error("Failed to load posts. Please try again.");
+        toast.error("Failed to load posts. Please try again.");
         // in case rendering an error from the API $toast.error(err);
       });
   }
